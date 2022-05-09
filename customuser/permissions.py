@@ -8,5 +8,5 @@ class IsSupportUser(BasePermission):
 
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            return request.user.is_support
+            return request.user.__init__is_support
         return False
