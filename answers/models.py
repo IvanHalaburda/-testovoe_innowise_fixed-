@@ -7,9 +7,9 @@ sys.path.append('..')
 
 
 class Message(models.Model):
-    to_ticket = models.ForeignKey(Ticket, related_name='messages',
+    related_ticket = models.ForeignKey(Ticket, related_name='messages',
                                   on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('customuser.User', on_delete=models.CASCADE)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
 
