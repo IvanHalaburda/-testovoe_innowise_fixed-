@@ -1,15 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user/', include('customuser.urls')),
     path('api/v1/', include('tickets.urls')),
 #Display messages related to ticket, which id == pk
     path('api/v1/<int:pk>/', include('answers.urls')),
-    path('api/v1/user/', include('customuser.urls')),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

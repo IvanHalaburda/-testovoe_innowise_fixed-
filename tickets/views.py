@@ -1,3 +1,4 @@
+from customuser.models import User
 from rest_framework import permissions, viewsets
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer
@@ -17,3 +18,7 @@ class TicketViewSet(viewsets.ModelViewSet):
             self.permission_classes = [permissions.IsAdminUser, ]
 
         return super(TicketViewSet, self).get_permissions()
+
+    def perform_create(self, serializer):
+        author = User.objects.get(id=self.request.user.id)
+        serializer.save(author=author)
