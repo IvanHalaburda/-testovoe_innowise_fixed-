@@ -27,6 +27,5 @@ class MessageSerializer(serializers.ModelSerializer):
     #                                       queryset=Ticket.objects.all())
 
     class Meta:
-        #read_only_fields = ('author', )
         fields = ('id', 'body', 'related_ticket', 'author', 'created', )
         model = Message

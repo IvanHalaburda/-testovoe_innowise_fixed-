@@ -1,9 +1,5 @@
-import sys
-
 from django.db import models
 from tickets.models import Ticket
-
-sys.path.append('..')
 
 
 class Message(models.Model):

@@ -22,4 +22,4 @@ class MessageList(generics.ListCreateAPIView):
         if self.request.user.is_support or author == related_ticket.author.id:
             serializer.save(author=author, related_ticket = related_ticket)
         else:
-            raise ValidationError({'Error': 'No permission'})
+            raise ValidationError({'Error': 'No permission (only for author and support)'})
