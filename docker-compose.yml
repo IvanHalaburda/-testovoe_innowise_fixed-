@@ -12,6 +12,7 @@ services:
       ./.env.dev
     depends_on:
       - db
+      - celery
 
   db:
     image: postgres:11
@@ -19,6 +20,21 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.dev
+
+  redis:
+    image: redis:alpine
+
+  celery:
+    build: .
+    command: celery -A config worker
+    volumes:
+      - .:/code
+    links:
+      - redis
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - redis
 
 volumes:
   postgres_data:
