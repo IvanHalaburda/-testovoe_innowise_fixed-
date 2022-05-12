@@ -1,11 +1,12 @@
 from django.urls import path
 from tickets.views import (TicketCreateView, TicketListView,
-                           TicketRetrieveDeleteView)
+                           TicketRetrieveDeleteView, TicketUpdateView)
 
 urlpatterns = [
     path('tickets/', TicketListView.as_view()),
-    path('tickets/<int:pk>/', TicketRetrieveDeleteView.as_view()),
     path('tickets/create/', TicketCreateView.as_view()),
+    path('tickets/<int:pk>/', TicketRetrieveDeleteView.as_view()),
+    path('tickets/<int:pk>/update/', TicketUpdateView.as_view()),
 
 ]
 

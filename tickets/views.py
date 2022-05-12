@@ -2,7 +2,7 @@ from customuser.models import User
 from rest_framework import generics, permissions  # , viewsets
 from rest_framework.exceptions import ValidationError
 from tickets.models import Ticket
-from tickets.serializers import TicketSerializer
+from tickets.serializers import TicketSerializer, TicketUpdateSerializer
 
 # class TicketViewSet(viewsets.ModelViewSet):
 
@@ -47,18 +47,16 @@ class TicketRetrieveDeleteView(generics.RetrieveDestroyAPIView):
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            raise ValidationError({'Error': 'No permission(only for author and support'})
+            raise ValidationError({'Error': 'No permission (only for author and support)'})
 
 
-#отдельная вьюха для обновления тикета
-# class TicketUpdate(generics.UpdateAPIView):
-#     """
-#     Обновление только статуса заявки
-#     """
+class TicketUpdateView(generics.UpdateAPIView):
+    """
+    Обновление только статуса заявки
+    """
 
-#     serializer_class = TicketUpdateSerializer
-#     permission_classes = [IsAuthenticated]
+    serializer_class = TicketUpdateSerializer
 
-#     def get_queryset(self):
-#         if self.request.user.is_support:
-#             return Ticket.objects.all()
+    def get_queryset(self):
+        if self.request.user.is_support:
+            return Ticket.objects.all()
