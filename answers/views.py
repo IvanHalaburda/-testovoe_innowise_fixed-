@@ -8,7 +8,13 @@ from tickets.models import Ticket
 
 
 class MessageList(generics.ListCreateAPIView):
-#Quryset consists of messages, related to ticket with specific id 
+    """
+    Returns queryset that consists of messages,
+    related to ticket with specific id.
+    Only Ticket's author and support users allowed
+    to leave their comments
+    """
+
     def get_queryset(self):
         related_ticket = get_object_or_404(Ticket, pk=self.kwargs['pk'])
         queryset = related_ticket.messages.all()

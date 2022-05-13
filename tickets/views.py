@@ -4,31 +4,20 @@ from rest_framework.exceptions import ValidationError
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer, TicketUpdateSerializer
 
-# class TicketViewSet(viewsets.ModelViewSet):
-
-#     queryset = Ticket.objects.all()
-#     serializer_class = TicketSerializer
-
-#     def get_permissions(self):
-# #User can create new tickets and see existing ones, but can't change them
-#         if self.request.method == 'GET' or self.request.method == 'POST':
-#             self.permission_classes = [permissions.IsAuthenticated, ]
-#         else:
-# #Admin can change ticket(status principally)
-#             self.permission_classes = [permissions.IsAdminUser, ]
-
-#         return super(TicketViewSet, self).get_permissions()
-
-#     def perform_create(self, serializer):
-#         author = User.objects.get(id=self.request.user.id)
-#         serializer.save(author=author)
 
 class TicketListView(generics.ListAPIView):
+    """
+    Displays all tickets if User was authenticated
+    """
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
 class TicketCreateView(generics.CreateAPIView):
+    """
+    Creates ticket, populates field 'author'
+    with current User
+    """
     serializer_class = TicketSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
@@ -37,6 +26,10 @@ class TicketCreateView(generics.CreateAPIView):
         serializer.save(author=author)
 
 class TicketRetrieveDeleteView(generics.RetrieveDestroyAPIView):
+    """
+    Displays information about Ticket and allows
+    author and support user to delete Ticket
+    """
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -52,7 +45,8 @@ class TicketRetrieveDeleteView(generics.RetrieveDestroyAPIView):
 
 class TicketUpdateView(generics.UpdateAPIView):
     """
-    Обновление только статуса заявки
+    Updating Ticket's status.
+    Allowed only to support user
     """
 
     serializer_class = TicketUpdateSerializer
@@ -60,3 +54,5 @@ class TicketUpdateView(generics.UpdateAPIView):
     def get_queryset(self):
         if self.request.user.is_support:
             return Ticket.objects.all()
+        else:
+            raise ValidationError({'Error': 'No permission (only for support)'})

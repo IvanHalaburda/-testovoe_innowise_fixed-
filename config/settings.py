@@ -12,20 +12,24 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 AUTH_USER_MODEL = 'customuser.User'
 
-INSTALLED_APPS = [
+django_apps = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#3-rd party apps
-    'rest_framework',
-#local
+]
+
+third_party_apps = ['rest_framework', ]
+
+local_apps = [
     'tickets.apps.TicketsConfig',
     'answers.apps.AnswersConfig',
     'customuser.apps.CustomuserConfig',
 ]
+
+INSTALLED_APPS = django_apps + third_party_apps + local_apps
 
 REST_FRAMEWORK = {
 

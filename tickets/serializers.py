@@ -6,13 +6,19 @@ from .tasks import status_update_notification
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    """
+    Returns name of ticket's author
+    instead of bare id
+    """
     class Meta:
         model = get_user_model()
         fields = ('username',)
 
 
 class TicketSerializer(serializers.ModelSerializer):
-  #Display User's username instead of bare id
+    """
+    Serializer for ticket.
+    """
     author = AuthorSerializer(many=False, read_only=True)
 
     class Meta:
@@ -23,7 +29,12 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketUpdateSerializer(serializers.ModelSerializer):
-
+    """
+    Serializer for ticket updating.
+    Support user can change only 'status' field.
+    Updating triggers function to send
+    author a notification.
+    """
     class Meta:
         model = Ticket
         fields = ('status',)

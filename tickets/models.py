@@ -2,7 +2,11 @@ from django.db import models
 
 
 class Ticket(models.Model):
-#Availabe statuses for ticket
+    """
+    Model of Ticket with limited options for
+    field 'status'
+    """
+    Availabe statuses for ticket
     class TicketStatus(models.TextChoices):
         ACTIVE = 'Active'
         FROZEN = 'Frozen'

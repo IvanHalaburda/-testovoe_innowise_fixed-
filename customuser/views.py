@@ -18,7 +18,6 @@ class CustomUserListView(generics.ListAPIView):
     list of all users
 
     """
-
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
     permission_classes = (IsAuthenticated, )

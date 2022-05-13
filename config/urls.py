@@ -5,6 +5,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('customuser.urls')),
     path('api/v1/', include('tickets.urls')),
-#Display messages related to ticket, which id == pk
     path('api/v1/tickets/', include('answers.urls')),
 ]

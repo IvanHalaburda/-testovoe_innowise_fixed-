@@ -4,7 +4,8 @@ from django.db import models
 
 class User(AbstractUser):
     """
-    Кастомная модель пользователя
+    Custom User model
+
     """
     username = models.CharField(max_length = 40, unique = True)
     email = models.EmailField(unique = True, blank = False, null = False)
