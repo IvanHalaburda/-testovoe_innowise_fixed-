@@ -7,16 +7,18 @@ from django.contrib.auth import get_user_model
 def test_user(db) -> User:
 
     User = get_user_model()
-    testuser = User.objects.create_user(username='testuser', password='askjdfjkad')
+    testuser = User.objects.create_user(username='testuser',
+                                        password='askjdfjkad')
     testuser.save()
     return testuser
 
 
 def test_created_user(test_user):
 
-    assert User.objects.filter(username = "testuser").exists()
+    assert User.objects.filter(username="testuser").exists()
     assert test_user.username == 'testuser'
     assert test_user.is_support == False
+
 
 def test_updated_user(test_user):
     test_user.is_support = True

@@ -7,10 +7,11 @@ from tickets.models import Ticket
 def test_ticket(db) -> Ticket:
 
     User = get_user_model()
-    testuser = User.objects.create_user(username='testuser', password='askjdfjkad')
+    testuser = User.objects.create_user(username='testuser',
+                                        password='askjdfjkad')
     testuser.save()
     testticket = Ticket.objects.create(status='Active', title='problem',
-                                       author = testuser,body = 'problems' )
+                                       author=testuser, body='problems')
     testticket.save()
     return testticket
 
@@ -22,6 +23,7 @@ def test_created_ticket(test_ticket):
     assert test_ticket.status == 'Active'
     assert test_ticket.author.username == 'testuser'
     assert test_ticket.body == 'problems'
+
 
 def test_updated_ticket(test_ticket):
     test_ticket.title = 'No problem'

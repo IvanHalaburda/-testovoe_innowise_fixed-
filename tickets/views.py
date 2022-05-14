@@ -1,6 +1,7 @@
 from customuser.models import User
 from rest_framework import generics, permissions  # , viewsets
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 from tickets.models import Ticket
 from tickets.serializers import TicketSerializer, TicketUpdateSerializer
 
@@ -13,6 +14,7 @@ class TicketListView(generics.ListAPIView):
     serializer_class = TicketSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
+
 class TicketCreateView(generics.CreateAPIView):
     """
     Creates ticket, populates field 'author'
@@ -22,8 +24,9 @@ class TicketCreateView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
 
     def perform_create(self, serializer):
-        author = User.objects.get(id = self.request.user.id)
+        author = User.objects.get(id=self.request.user.id)
         serializer.save(author=author)
+
 
 class TicketRetrieveDeleteView(generics.RetrieveDestroyAPIView):
     """
@@ -33,14 +36,16 @@ class TicketRetrieveDeleteView(generics.RetrieveDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     permission_classes = (permissions.IsAuthenticated, )
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        author = User.objects.get(id = self.request.user.id)
-        if self.request.user.is_support:
+        author = User.objects.get(id=self.request.user.id)
+        if self.request.user.is_support or instance.author == author:
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            raise ValidationError({'Error': 'No permission (only for author and support)'})
+            raise ValidationError({'Error':
+                                   'No permission (only for author and support)'})
 
 
 class TicketUpdateView(generics.UpdateAPIView):
@@ -55,4 +60,5 @@ class TicketUpdateView(generics.UpdateAPIView):
         if self.request.user.is_support:
             return Ticket.objects.all()
         else:
-            raise ValidationError({'Error': 'No permission (only for support)'})
+            raise ValidationError({'Error':
+                                  'No permission (only for support)'})

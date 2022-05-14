@@ -12,4 +12,5 @@ def status_update_notification(title, email, new_status):
     subject = 'Your ticket was updated'
     message = f'Status of your ticket "{title}" has changed to "{new_status}"'
     recepient = email
-    send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
+    send_mail(subject, message, EMAIL_HOST_USER,
+              [recepient], fail_silently=False)

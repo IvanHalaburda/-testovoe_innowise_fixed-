@@ -8,13 +8,14 @@ from tickets.models import Ticket
 def test_ticket_answer(db) -> Message:
 
     User = get_user_model()
-    testuser = User.objects.create_user(username='testuser', password='askjdfjkad')
+    testuser = User.objects.create_user(username='testuser',
+                                        password='askjdfjkad')
     testuser.save()
     testticket = Ticket.objects.create(status='Active', title='problem',
-                                       author = testuser,body = 'problems' )
+                                       author=testuser, body='problems')
     testticket.save()
-    testanswer = Message.objects.create(related_ticket = testticket, author = testuser,
-                                        body= 'answer')
+    testanswer = Message.objects.create(related_ticket=testticket,
+                                        author=testuser, body='answer')
     testanswer.save()
     return testanswer
 
@@ -25,6 +26,7 @@ def test_created_ticket(test_ticket_answer):
     assert test_ticket_answer.body == 'answer'
     assert test_ticket_answer.author.username == 'testuser'
     assert test_ticket_answer.related_ticket.status == 'Active'
+
 
 def test_updated_ticket(test_ticket_answer):
     test_ticket_answer.body = 'answer №2'

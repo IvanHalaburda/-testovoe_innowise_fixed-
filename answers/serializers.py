@@ -13,6 +13,7 @@ class AuthorSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('username', 'is_support')
 
+
 class TicketTitleSerializer(serializers.ModelSerializer):
     """
     This serializer being used to return Ticket's
@@ -21,6 +22,7 @@ class TicketTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = ('title', )
+
 
 class MessageSerializer(serializers.ModelSerializer):
     """

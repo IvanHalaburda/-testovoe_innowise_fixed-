@@ -45,6 +45,7 @@ class TicketUpdateSerializer(serializers.ModelSerializer):
         if instance.status != changed_status:
             instance.status = changed_status
             instance.save()
-            status_update_notification.delay(instance.title, instance.author.email,
+            status_update_notification.delay(instance.title,
+                                             instance.author.email,
                                              changed_status)
         return instance

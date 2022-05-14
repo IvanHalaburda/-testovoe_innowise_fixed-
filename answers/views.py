@@ -23,9 +23,9 @@ class MessageList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
-        related_ticket = get_object_or_404(Ticket, pk = self.kwargs['pk'])
-        author = User.objects.get(id = self.request.user.id)
+        related_ticket = get_object_or_404(Ticket, pk=self.kwargs['pk'])
+        author = User.objects.get(id=self.request.user.id)
         if self.request.user.is_support or author == related_ticket.author.id:
-            serializer.save(author=author, related_ticket = related_ticket)
+            serializer.save(author=author, related_ticket=related_ticket)
         else:
             raise ValidationError({'Error': 'No permission (only for author and support)'})

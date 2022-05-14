@@ -11,10 +11,8 @@ class Ticket(models.Model):
         FROZEN = 'Frozen'
         SOLVED = 'Solved'
 
-    status = models.CharField(max_length = 25, choices = TicketStatus.choices,
-                              default = TicketStatus.ACTIVE,
-                              )
-
+    status = models.CharField(max_length=25, choices=TicketStatus.choices,
+                              default=TicketStatus.ACTIVE,)
     title = models.CharField(max_length=200)
     author = models.ForeignKey('customuser.User', on_delete=models.CASCADE, )
     body = models.TextField()
