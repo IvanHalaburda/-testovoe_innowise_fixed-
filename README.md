@@ -1,5 +1,6 @@
-# testovoe_innowise_fixed
-## Test task for innowise
+# Test task for innowise
+
+## Instruction 
 
 First of all, you need to make next changes to .env file:
 
