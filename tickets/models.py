@@ -6,7 +6,6 @@ class Ticket(models.Model):
     Model of Ticket with limited options for
     field 'status'
     """
-    Availabe statuses for ticket
     class TicketStatus(models.TextChoices):
         ACTIVE = 'Active'
         FROZEN = 'Frozen'
